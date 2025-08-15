@@ -1,0 +1,1 @@
+# FastAPI Skeleton (2025)

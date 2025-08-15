@@ -1,0 +1,24 @@
+[project]
+name = "fastapi-skeleton"
+version = "0.8.0"
+description = "basics setup for fastapi"
+authors = [
+    {name = "Stephen Sadowski", email = "stephen.sadowski@sjsadowski.com"},
+]
+dependencies = [
+    "fastapi>=0.116.1",
+    "pyjwt[crypto]>=2.10.1",
+    "python-box>=7.3.2",
+    "python-dotenv>=1.1.1",
+    "uvicorn>=0.35.0",
+]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "Commercial"}
+
+[dependency-groups]
+dev = [
+    "bandit>=1.8.6",
+    "pytest>=8.4.1",
+    "ruff>=0.12.9",
+]

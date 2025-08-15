@@ -68,8 +68,8 @@ async def lifespan(app: FastAPI):
         # app.state.authorizer = authorizer
         app.state.app_name = config.get("APP_NAME", "FastAPI Skeleton") # type: ignore
         yield
-    except Exception as e:
-        logger.error(f"Exception: {e}")
+    except Exception:
+        logger.exception()
         sys.exit(1)
     finally:
         listener.stop()

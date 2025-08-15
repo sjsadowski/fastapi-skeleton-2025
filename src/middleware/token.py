@@ -22,21 +22,21 @@ class TokenMiddleware(BaseHTTPMiddleware):
         """
         token_text: str | None = request.headers.get(self.header_name, None)
         if not token_text:
-            logger.error(f"Token not found in request headers: {self.header_name}")
+            logger.error("Token not found in request headers: %s", self.header_name)
             raise HTTPException(status_code=401, detail="Authorization token not found")
         else:
-            logger.debug(f"Token found in request headers: {self.header_name}")
+            logger.debug("Token found in request headers: %s", self.header_name)
             if not token_text.startswith("Bearer "):
-                logger.error(f"Token does not start with 'Bearer ': {token_text}")
+                logger.error("Token does not start with 'Bearer': %s", token_text)
                 raise HTTPException(status_code=401, detail="Authorization token not found")
 
         return token_text.split()[1].strip()
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         token: str = request.app.state.token
-        logger.debug(f"Token from header: {self.header_name}")
+        logger.debug("Token from header: %s", self.header_name)
         if not request.headers.get(self.header_name) or request.headers.get(self.header_name) != token:
-            logging.error(f'Correct API key not supplied ({token})')
+            logging.error("Correct API key not supplied (%s)", token)
             raise HTTPException(status_code=401, detail={"unauthorized": "Authorization token not found"})
         response = await call_next(request)
         return response

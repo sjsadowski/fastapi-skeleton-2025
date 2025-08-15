@@ -22,10 +22,11 @@ class AuthNZMiddleware(BaseHTTPMiddleware):
             privileges: dict[str, str|int] = json.loads(request.state.user_auth.get("privileges", {})) # type: ignore
             if privileges:
                 request.state.admin = privileges.get("admin")
-        except Exception as e:
-            logging.error(f"Exception: {e}")
+        except Exception:
+            logging.exception("AuthNZ error")
             request.state.user_auth = None
             request.state.admin = False
-        logging.debug(f"User Auth: {request.state.user_auth}") # type: ignore
+
+        logging.debug("User Auth: %s", request.state.user_auth) # type: ignore
         response = await call_next(request)
         return response
